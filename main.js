@@ -12,7 +12,7 @@ const winVH = $('#SeatChartContainer').height();
 const winVW = $('#SeatChartContainer').width();
 //init seat row
 let SeatRow;
-
+var widthPX;
 $("form").submit(function(e) {
     //prevent submit
     e.preventDefault();
@@ -67,7 +67,8 @@ $("form").submit(function(e) {
     //make panel grid
     let gridPanel = $('<div>').addClass("grid-panel").css({
         // "border": "1px solid black",
-        'margin': '3px',
+        // 'margin': '3px',
+        "clear": "both"
     });
 
     switch (numColumns) {
@@ -117,10 +118,16 @@ $("form").submit(function(e) {
             }
             seatNameNum++;
         }
+        $('<hr>').css({
+            "width": "100%",
+            "height": "1px",
+            "margin": 0,
+        }).appendTo(gridPanel);
         seatRowNum++;
         seatNameNum = 1;
     }
-
+    console.log('container: ' + container.width());
+    console.log('numColumns: ' + numColumns);
     gridPanel.appendTo(container);
 });
 
@@ -160,13 +167,13 @@ function genCharArray(charA, charZ) {
 // console.log(genCharArray('a', 'z'));
 
 function divMaker(gridPanel, text) {
-    var widthPX = Math.ceil((container.width() * 0.975) / numColumns) - 2;
+    var widthPX = Math.ceil((container.width() * 0.985) / numColumns);
     if (numColumns > 7) {
-        widthPX = Math.ceil((container.width() * 0.975) / numColumns) - 2;
+        widthPX = Math.ceil((container.width() * 0.985) / numColumns);
         // + Math.ceil((container.width() / (container.width() / 100)) * 2);
     }
-    console.log('container: ' + container.width());
-    console.log('numColumns: ' + numColumns);
+    // console.log('container: ' + container.width());
+    // console.log('numColumns: ' + numColumns);
     console.log('widthPX: ' + widthPX);
     return $('<div>', {
         text: text,
