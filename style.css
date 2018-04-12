@@ -96,6 +96,10 @@ input[type=number] {
     border-radius: 3px;
 }
 
+.aisle {
+    border: 1px solid transparent!important;
+}
+
 .red {
     background-color: red;
 }

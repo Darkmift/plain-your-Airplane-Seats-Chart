@@ -122,6 +122,7 @@ $("form").submit(function(e) {
             "width": "100%",
             "height": "1px",
             "margin": 0,
+            'visibility': 'hidden'
         }).appendTo(gridPanel);
         seatRowNum++;
         seatNameNum = 1;
@@ -134,7 +135,7 @@ $("form").submit(function(e) {
 function makeSeat(rowDigit, colDigit, gridPanel, seatName) {
     var ABCArray = []
     if (seatName === 'Aisle') {
-        return divMaker(gridPanel, '');
+        return divMaker(gridPanel, '').css('border', '1px solid transparent!important');
     }
     if (seatName === 'Col') {
         return divMaker(gridPanel, seatName + ': ' + rowDigit);
@@ -170,17 +171,18 @@ function divMaker(gridPanel, text) {
     var widthPX = Math.ceil((container.width() * 0.985) / numColumns);
     if (numColumns > 7) {
         widthPX = Math.ceil((container.width() * 0.985) / numColumns);
-        // + Math.ceil((container.width() / (container.width() / 100)) * 2);
     }
-    // console.log('container: ' + container.width());
-    // console.log('numColumns: ' + numColumns);
     console.log('widthPX: ' + widthPX);
-    return $('<div>', {
+    var div = $('<div>', {
         text: text,
         class: "seat",
         click: function(e) {
             e.preventDefault();
         },
         width: widthPX,
-    }).appendTo(gridPanel);
+    });
+    if (text === '') {
+        return div.addClass('aisle').appendTo(gridPanel);
+    }
+    return div.appendTo(gridPanel);
 }
