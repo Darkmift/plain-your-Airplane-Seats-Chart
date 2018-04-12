@@ -14,9 +14,10 @@ const winVW = $('#SeatChartContainer').width();
 let SeatRow;
 
 $("form").submit(function(e) {
-    console.log('form clicked');
     //prevent submit
     e.preventDefault();
+    console.log('form clicked');
+
     Column = $('#columns');
     Row = $('#rows');
     // bind valus to columns and rows
