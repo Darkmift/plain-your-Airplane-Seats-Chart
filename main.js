@@ -195,10 +195,25 @@ function divMaker(gridPanel, text) {
         return $('<div>', {
             text: text,
             class: "seat",
+            price: 100,
+            leftOfIsle: false,
             click: function(e) {
                 e.preventDefault();
+                console.log('clicked on price:' + $(this).attr("price"));
                 var choseChair = $(event.target);
                 choseChair.toggleClass('red');
+                // if ($(this).next().is(".red")) {
+                //     $(this).attr("price", 200);
+                //     $(this).next().attr("price", 200);
+                //     //console.log('this: ' + $(this).attr("price"), 'next: ', $(this).next().attr("price"));
+                //     //console.log($(this)[0].attributes.price.value);
+                // }
+                // if ($(this).prev().is(".red")) {
+                //     $(this).attr("price", 200);
+                //     $(this).prev().attr("price", 200);
+                //     //console.log('this: ' + $(this).attr("price"), 'prev: ' + $(this).prev().attr("price"));
+                //     //console.log($(this)[0].attributes.price.value);
+                // }
             },
             width: widthPX,
         }).appendTo(gridPanel);
@@ -233,7 +248,7 @@ var priceBtn = $('<button>', {
         if ($('bold')) {
             $('bold').remove();
         }
-        var onlyPrice = 100;
+        var basePrice = 100;
         var multiPrice = 200;
         var totalPrice = 0;
 
@@ -248,21 +263,60 @@ var priceBtn = $('<button>', {
             seatsToBuy[i] = {
                 id: Number(chosenSeats[i].attributes.id.value),
                 name: chosenSeats[i].innerText,
-                price: onlyPrice
+                price: basePrice
             }
             chosenSeatsId[i] = Number(chosenSeats[i].attributes.id.value);
             chosenSeatsName[i] = chosenSeats[i].innerText;
         }
-        console.log(seatsToBuy[0].id);
-        //
-        console.log(jQuery.type(numChairs));
-
-        if (numChairs < 2) {
-            totalPrice = onlyPrice * numChairs;
-        } else if (numChairs > 1) {
-            totalPrice = multiPrice * numChairs;
+        console.log(seatsToBuy);
+        //set cumulative price
+        for (let index = 0; index < seatsToBuy.length; index++) {
+            //init +1counter set to 0 if num is greater than array length
+            var indexPlusOne = (index == seatsToBuy.length - 1 ? 0 : index + 1);
+            //ignore if seat is 10th in row
+            if (seatsToBuy[index].id % 10 !== 0) {
+                //check if seats next to each other and seat(i) is not left of aisle
+                if (index < seatsToBuy.length) {
+                    console.log('indexPlusOne: ' + indexPlusOne);
+                    // console.log('seatsToBuy[index].id: ' + seatsToBuy[index].id);
+                    // console.log(seatsToBuy[indexPlusOne].id + '<<the +1/ and>>' + seatsToBuy[index].id);
+                    if ((seatsToBuy[indexPlusOne].id - seatsToBuy[index].id) === 1) {
+                        //console.log(idIndexString);
+                        // console.log('seat: ' + seatsToBuy[index].name + 'and ' + seatsToBuy[index + 1].name + ' are next to each other');
+                        //graveyard chunk Id 7
+                        console.log('#' + seatsToBuy[index].id);
+                        if (!$('#' + seatsToBuy[index].id).next().is(".aisle")) {
+                            //console.log('seat: ' + seatsToBuy[index].name + ' is left of isle');
+                            console.log('seat: ' + seatsToBuy[index].name + 'and ' + seatsToBuy[index + 1].name + ' are next to each other');
+                            seatsToBuy[index].price = 200;
+                            seatsToBuy[index + 1].price = 200;
+                        }
+                    }
+                }
+            } else {
+                //console.log('is %10: ' + seatsToBuy[index].id);
+            }
         }
-        console.log(totalPrice);
+        //calc total cost
+        var totalPrice = 0;
+        var seatTextBillDL = $('<dl>');
+        var seatTextBillDT = $('<dt>', {
+            text: 'Bill BreakDown',
+        }).appendTo(seatTextBillDL);
+
+        for (let index = 0; index < seatsToBuy.length; index++) {
+            console.log('seat: ' + seatsToBuy[index].name + ' Price of seat: ' + seatsToBuy[index].price);
+            seatTextBillDL.append($('<dd>', {
+                text: 'seat: ' + seatsToBuy[index].name + ' Price of seat: ' + seatsToBuy[index].price,
+            }));
+            //seatTextBill = seatTextBill + '<dd>seat: ' + seatsToBuy[index].name + ' Price of seat: ' + seatsToBuy[index].price + '<dd>';
+            totalPrice = totalPrice + seatsToBuy[index].price;
+        }
+        console.log('totalPrice: ' + totalPrice);
+
+
+
+        //console.log(totalPrice);
         resPrice = $('<bold>', {
             text: "Your calculated price for " + numChairs + " people is " + totalPrice + " $ .",
             css: {
@@ -270,6 +324,7 @@ var priceBtn = $('<button>', {
                 marginTop: "2rem"
             }
         });
+        seatTextBillDL.appendTo(resPrice);
         resPrice.appendTo(container);
     },
 });
