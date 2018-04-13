@@ -156,7 +156,11 @@ function makeSeat(rowDigit, colDigit, gridPanel, seatName) {
     if (seatName === 'Column') {
         return divMaker(gridPanel, seatName + ': ' + colDigit);
     }
-    return divMaker(gridPanel, seatName + ': ' + rowDigit + '-' + colDigit);
+    var SeatId = rowDigit.toString() + colDigit.toString();
+    if (colDigit === 10) {
+        SeatId = (rowDigit + 1).toString() + '0';
+    }
+    return divMaker(gridPanel, seatName + ': ' + rowDigit + '-' + colDigit).attr('id', SeatId);
 }
 
 function setAlert(ColOrRow, Msg) {
@@ -197,6 +201,18 @@ function divMaker(gridPanel, text) {
         },
         width: widthPX,
     });
+    if (~text.indexOf("Seat")) {
+        return $('<div>', {
+            text: text,
+            class: "seat",
+            click: function(e) {
+                e.preventDefault();
+                var choseChair = $(event.target);
+                choseChair.toggleClass('red');
+            },
+            width: widthPX,
+        }).appendTo(gridPanel);
+    }
     if (~text.indexOf("Column")) {
         return div.addClass('colHead').appendTo(gridPanel);
     }
@@ -205,3 +221,61 @@ function divMaker(gridPanel, text) {
     }
     return div.appendTo(gridPanel);
 }
+
+
+///pricing stuff
+var btns = $('<div>', {
+    class: "input-group-btn",
+    css: {
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "1rem"
+    },
+});
+
+var priceBtn = $('<button>', {
+    class: "price btn btn-default",
+    text: "Price",
+    css: { marginRight: "1rem" },
+    click: function(e) {
+
+        if ($('bold')) {
+            $('bold').remove();
+        }
+        var onlyPrice = 100;
+        var multiPrice = 200;
+        var totalPrice = 0;
+
+        var numChairs = Number($('*.red').length);
+        console.log(jQuery.type(numChairs));
+
+        if (numChairs < 2) {
+            totalPrice = onlyPrice * numChairs;
+        } else if (numChairs > 1) {
+            totalPrice = multiPrice * numChairs;
+        }
+        console.log(totalPrice);
+        resPrice = $('<bold>', {
+            text: "Your calculated price for " + numChairs + " people is " + totalPrice + " $ .",
+            css: {
+                fontSize: "20px",
+                marginTop: "2rem"
+            }
+        });
+        resPrice.appendTo(container);
+    },
+});
+priceBtn.appendTo(btns);
+
+var resetBtn = $('<button>', {
+    class: "reset btn btn-default",
+    text: "Reset",
+    css: { marginLeft: "1rem" },
+    click: function(e) {
+        $('.red').removeClass('red');
+        $('bold').empty();
+    },
+});
+resetBtn.appendTo(btns);
+btns.appendTo(container);
