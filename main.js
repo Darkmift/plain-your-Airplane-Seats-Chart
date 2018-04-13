@@ -104,6 +104,22 @@ $("form").submit(function(e) {
     console.log(numColumns);
     var seatRowNum = 1;
     var seatNameNum = 1;
+
+    for (let index = 0; index < SeatRow.length; index++) {
+        // console.log(SeatRow.charAt(index) + index);
+        switch (SeatRow.charAt(index)) {
+            case 'S':
+                makeSeat(seatRowNum, seatNameNum, gridPanel, 'Column');
+                break;
+            case '_':
+                makeSeat(seatRowNum, seatNameNum, gridPanel, 'Aisle');
+                seatNameNum--;
+                break;
+        }
+        seatNameNum++;
+    }
+    seatNameNum = 1;
+    //create the plane seats and aisles
     for (let i = 0; i < numRows; i++) {
         for (let index = 0; index < SeatRow.length; index++) {
             // console.log(SeatRow.charAt(index) + index);
@@ -137,8 +153,8 @@ function makeSeat(rowDigit, colDigit, gridPanel, seatName) {
     if (seatName === 'Aisle') {
         return divMaker(gridPanel, '').css('border', '1px solid transparent!important');
     }
-    if (seatName === 'Col') {
-        return divMaker(gridPanel, seatName + ': ' + rowDigit);
+    if (seatName === 'Column') {
+        return divMaker(gridPanel, seatName + ': ' + colDigit);
     }
     return divMaker(gridPanel, seatName + ': ' + rowDigit + '-' + colDigit);
 }
@@ -181,6 +197,9 @@ function divMaker(gridPanel, text) {
         },
         width: widthPX,
     });
+    if (~text.indexOf("Column")) {
+        return div.addClass('colHead').appendTo(gridPanel);
+    }
     if (text === '') {
         return div.addClass('aisle').appendTo(gridPanel);
     }
