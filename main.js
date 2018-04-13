@@ -156,6 +156,7 @@ function makeSeat(rowDigit, colDigit, gridPanel, seatName) {
     if (seatName === 'Column') {
         return divMaker(gridPanel, seatName + ': ' + colDigit);
     }
+    //assign id to seats
     var SeatId = rowDigit.toString() + colDigit.toString();
     if (colDigit === 10) {
         SeatId = (rowDigit + 1).toString() + '0';
@@ -175,17 +176,6 @@ function setAlert(ColOrRow, Msg) {
         }, 3000);
     });
 }
-
-function genCharArray(charA, charZ) {
-    var a = [],
-        i = charA.charCodeAt(0),
-        j = charZ.charCodeAt(0);
-    for (; i <= j; ++i) {
-        a.push(String.fromCharCode(i));
-    }
-    return JSON.stringify(a);
-}
-// console.log(genCharArray('a', 'z'));
 
 function divMaker(gridPanel, text) {
     var widthPX = Math.ceil((container.width() * 0.985) / numColumns);
@@ -247,7 +237,24 @@ var priceBtn = $('<button>', {
         var multiPrice = 200;
         var totalPrice = 0;
 
-        var numChairs = Number($('*.red').length);
+        chosenSeats = $('*.red');
+        var numChairs = Number(chosenSeats.length);
+        //init selected seats
+        var seatsToBuy = [];
+        var chosenSeatsId = [];
+        var chosenSeatsName = [];
+        //grab id of all selected seats and add to chosenSeatsId array as numbers
+        for (let i = 0; i < chosenSeats.length; i++) {
+            seatsToBuy[i] = {
+                id: Number(chosenSeats[i].attributes.id.value),
+                name: chosenSeats[i].innerText,
+                price: onlyPrice
+            }
+            chosenSeatsId[i] = Number(chosenSeats[i].attributes.id.value);
+            chosenSeatsName[i] = chosenSeats[i].innerText;
+        }
+        console.log(seatsToBuy[0].id);
+        //
         console.log(jQuery.type(numChairs));
 
         if (numChairs < 2) {
@@ -279,3 +286,23 @@ var resetBtn = $('<button>', {
 });
 resetBtn.appendTo(btns);
 btns.appendTo(container);
+
+
+///test
+var contents = [
+    { name: 'a', type: 1 },
+    { name: 'b', type: 5 },
+    { name: 'c', type: 2 },
+    { name: 'd', type: 1 }
+];
+
+contents.map((content, index, array) => {
+    switch (content.type) {
+        case 1:
+            console.log("type is one and next type is: ", array[index + 1] ? array[index + 1].type : 'empty');
+            break;
+        case 2:
+            console.log("type is two")
+            break;
+    }
+});
