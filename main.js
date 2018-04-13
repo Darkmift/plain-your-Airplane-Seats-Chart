@@ -62,6 +62,7 @@ $("form").submit(function(e) {
     //remove previous chart if any
     if ($('.grid-panel')) {
         $('.grid-panel').remove();
+        $('.alert').remove();
     }
 
     //make panel grid
@@ -245,9 +246,10 @@ var priceBtn = $('<button>', {
     css: { marginRight: "1rem" },
     click: function(e) {
 
-        if ($('bold')) {
-            $('bold').remove();
-        }
+        //remove previous calc
+        $('bold').remove();
+        $('.alert').remove();
+
         var basePrice = 100;
         var multiPrice = 200;
         var totalPrice = 0;
@@ -317,15 +319,16 @@ var priceBtn = $('<button>', {
 
 
         //console.log(totalPrice);
-        resPrice = $('<bold>', {
+        resPrice = $('<div>', {
             text: "Your calculated price for " + numChairs + " people is " + totalPrice + " $ .",
             css: {
                 fontSize: "20px",
                 marginTop: "2rem"
             }
-        });
+        }).addClass('alert alert-success');
         seatTextBillDL.appendTo(resPrice);
         resPrice.appendTo(container);
+        window.scrollTo(0, document.body.scrollHeight);
     },
 });
 priceBtn.appendTo(btns);
