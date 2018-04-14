@@ -203,7 +203,7 @@ $("form").submit(function(e) {
             //set cumulative price
             for (let index = 0; index < seatsToBuy.length; index++) {
                 //init +1counter set to 0 if num is greater than array length
-                var indexPlusOne = (index == seatsToBuy.length - 1 ? 0 : index + 1);
+                var indexPlusOne = (index === seatsToBuy.length - 1 ? 0 : index + 1);
                 //ignore if seat is 10th in row
                 if (seatsToBuy[index].id % 10 !== 0) {
                     //check if seats next to each other and seat(i) is not left of aisle
@@ -271,7 +271,7 @@ $("form").submit(function(e) {
 
 function makeSeat(rowDigit, colDigit, gridPanel, seatName) {
     if (seatName === 'Aisle') {
-        return divMaker(gridPanel, '').css('border', '1px solid transparent!important');
+        return divMaker(gridPanel, '');
     }
     if (seatName === 'Column') {
         return divMaker(gridPanel, seatName + ': ' + colDigit);
