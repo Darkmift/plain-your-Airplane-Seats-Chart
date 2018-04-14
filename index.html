@@ -2,78 +2,78 @@
 <html lang="en">
 
 <head>
-    <title>Seat Chart</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="https://pre11.deviantart.net/3944/th/pre/i/2012/122/6/9/cookie_monster_by_neorame-d4yb0b5.png" />
-    <!--bootstrap-->
-    <!--END OF HTML HERE-->
-    <!--Jquery(Bootstrap dependency)-->
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <!--Bootstrap Plugins-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <!--Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Seat Chart</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="https://pre11.deviantart.net/3944/th/pre/i/2012/122/6/9/cookie_monster_by_neorame-d4yb0b5.png" />
+  <!--bootstrap-->
+  <!--END OF HTML HERE-->
+  <!--Jquery(Bootstrap dependency)-->
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <!--Bootstrap Plugins-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  <!--Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-default ">
-                    <div class="panel-heading">
-                        <h4 class="text-center" style="margin:0;padding:0;">Create your Airplane Seats-Chart</h4>
-                    </div>
-                    <div class="panel-body panel-flexfix">
-                        <form id="form" class="align-items-center" action="">
-                            <dl style="width:100%;margin-left:0;" class="text-left alert alert-info">
-                                <dt>Requirements:</dt>
-                                <dd>Select between 4 and 10 columns</dd>
-                                <dd>Select between 10 and 75 rows</dd>
-                            </dl>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon">columns</span>
-                                    <input id="columns" name="columns" class="form-control" placeholder="insert columns amount" type="number">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon">rows</span>
-                                    <input id="rows" name="rows" class="form-control" placeholder="insert row amount" type="number">
-                                </div>
-                            </div>
-                            <div class="form-group text-center">
-                                <button style="width:75%" id="subBtn" name="singlebutton" class="btn btn-default">Submit</button>
-                            </div>
-                        </form>
-                    </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default ">
+          <div class="panel-heading">
+            <h4 class="text-center" style="margin:0;padding:0;">Create your Airplane Seats-Chart</h4>
+          </div>
+          <div class="panel-body panel-flexfix">
+            <form id="form" class="align-items-center" action="">
+              <dl style="width:100%;margin-left:0;" class="text-left alert alert-info">
+                <dt>Requirements:</dt>
+                <dd>Select between 4 and 10 columns</dd>
+                <dd>Select between 10 and 75 rows</dd>
+              </dl>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">columns</span>
+                  <input id="columns" name="columns" class="form-control" placeholder="insert columns amount" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                 </div>
-            </div>
-        </div>
-        <!-- da formz end -->
-        <div class="row">
-            <div style="min-width:80vw;" class="col-md-6">
-                <br>
-                <br>
-                <div class="panel panel-default ">
-                    <div class="panel-heading">
-                        Seat Chart
-                    </div>
-                    <div class="panel-body panel-flexfix">
-                        <div id="SeatChartContainer">
-                            <!-- table start -->
-
-                            <!--table end -->
-                        </div>
-                    </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">rows</span>
+                  <input id="rows" name="rows" class="form-control" placeholder="insert row amount" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true">
                 </div>
-            </div>
+              </div>
+              <div class="form-group text-center">
+                <button style="width:75%" id="subBtn" name="singlebutton" class="btn btn-default">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-    <script type="text/javascript" src="main.js"></script>
+    <!-- da formz end -->
+    <div class="row">
+      <div style="min-width:80vw;" class="col-md-6">
+        <br>
+        <br>
+        <div class="panel panel-default ">
+          <div class="panel-heading">
+            Seat Chart
+          </div>
+          <div class="panel-body panel-flexfix">
+            <div id="SeatChartContainer">
+              <!-- table start -->
+
+              <!--table end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="main.js"></script>
 </body>
 
 </html>
