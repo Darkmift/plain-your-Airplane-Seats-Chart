@@ -2,17 +2,11 @@
     display: none;
 }
 
-html {
-    font-size: 0.85rem;
+* {
+    font-size: 0.83rem!important;
 }
 
-@media only screen and (max-width: 700px) {
-    * {
-        font-size: 0.9rem!important;
-    }
-}
-
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1000px) {
     * {
         font-size: 0.75rem!important;
     }
@@ -75,18 +69,14 @@ input[type=number] {
 .grid-panel {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-top: 2px;
+    /* margin-top: 0.5rem; */
     /* border:px solid black; */
 }
 
 .colHead {
-    text-align: center;
     border: 1px solid #413c3c;
-    box-sizing: border-box;
-    margin-left: 1px;
-    margin-top: 4px;
     background-color: #989da5;
-    border-radius: 3px;
 }
 
 .seat {
@@ -94,9 +84,10 @@ input[type=number] {
     border: 1px solid #c3c3c3;
     box-sizing: border-box;
     margin-left: 1px;
-    margin-top: 4px;
+    margin-top: 2px;
     height: 40px;
     border-radius: 3px;
+    line-height: 35px;
 }
 
 .aisle {
@@ -105,4 +96,6 @@ input[type=number] {
 
 .red {
     background-color: red;
+    color: white;
+    font-weight: bold;
 }
