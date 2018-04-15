@@ -18,6 +18,7 @@ var widthPX;
 $(window).resize(function() {
     console.log("<div>Handler for .resize() called.</div>");
     //remove previous chart if any
+    //TODO fix resize issue this is just a crappy fix.
     if (!$('.grid-panel').is(':empty')) {
         $('.grid-panel').remove();
         $('.alert').remove();
@@ -31,7 +32,7 @@ $("form").submit(function(e) {
 
     Column = $('#columns');
     Row = $('#rows');
-    // bind valus to columns and rows
+    // bind values to columns and rows
     numColumns = Number(Column.val());
     numRows = Number(Row.val());
 
@@ -176,6 +177,7 @@ $("form").submit(function(e) {
     });
 
     var priceBtn = $('<button>', {
+        id: 'PriceBtn',
         class: "price btn btn-default",
         text: "Price",
         css: { marginRight: "1rem" },
@@ -187,17 +189,13 @@ $("form").submit(function(e) {
             var numChairs = Number(chosenSeats.length);
             //init selected seats
             var seatsToBuy = [];
-            var chosenSeatsId = [];
-            var chosenSeatsName = [];
-            //grab id of all selected seats and add to chosenSeatsId array as numbers
+            //set an array of seat objects.
             for (let i = 0; i < chosenSeats.length; i++) {
                 seatsToBuy[i] = {
                     id: Number(chosenSeats[i].attributes.id.value),
                     name: chosenSeats[i].innerText,
                     price: 100
                 }
-                chosenSeatsId[i] = Number(chosenSeats[i].attributes.id.value);
-                chosenSeatsName[i] = chosenSeats[i].innerText;
             }
             console.log(seatsToBuy);
             //set cumulative price
@@ -220,8 +218,6 @@ $("form").submit(function(e) {
                             }
                         }
                     }
-                } else {
-                    //console.log('is %10: ' + seatsToBuy[index].id);
                 }
             }
             //calc total cost
@@ -236,7 +232,6 @@ $("form").submit(function(e) {
                 seatTextBillDL.append($('<dd>', {
                     text: 'seat: ' + seatsToBuy[index].name + ' Price of seat: ' + seatsToBuy[index].price,
                 }));
-                //seatTextBill = seatTextBill + '<dd>seat: ' + seatsToBuy[index].name + ' Price of seat: ' + seatsToBuy[index].price + '<dd>';
                 totalPrice = totalPrice + seatsToBuy[index].price;
             }
             console.log('totalPrice: ' + totalPrice);
