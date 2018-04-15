@@ -13,29 +13,28 @@ const winVW = $('#SeatChartContainer').width();
 //init seat row
 let SeatRow;
 var widthPX;
-
+textfit();
 //resize fix
 $(window).resize(function() {
     console.log("<div>Handler for .resize() called.</div>");
     //remove previous chart if any
     //TODO fix resize issue this is just a crappy fix.
     if (!$('.grid-panel').is(':empty')) {
-        $('.grid-panel').remove();
+        $('.grid-panel').empty();
         $('.alert').remove();
     }
+    textfit();
 });
 
 $("form").submit(function(e) {
     //prevent submit
     e.preventDefault();
     console.log('form clicked');
-
     Column = $('#columns');
     Row = $('#rows');
     // bind values to columns and rows
     numColumns = Number(Column.val());
     numRows = Number(Row.val());
-
     //validation error alert div function
     function setAlert(ColOrRow, Msg) {
         ColOrRow.parent().parent().addClass('has-error');
@@ -120,36 +119,31 @@ $("form").submit(function(e) {
     console.log(numColumns);
     var seatRowNum = 1;
     var seatNameNum = 1;
+    //graveyard chunk 6
     //create the plane columns
-    for (let index = 0; index < SeatRow.length; index++) {
-        // console.log(SeatRow.charAt(index) + index);
-        switch (SeatRow.charAt(index)) {
-            case 'S':
-                makeSeat(seatRowNum, seatNameNum, colhead, 'Column').css('top', $(this).scrollTop() + "px");
-                break;
-            case '_':
-                makeSeat(seatRowNum, seatNameNum, colhead, 'Aisle').css('top', $(this).scrollTop() + "px");
-                seatNameNum--;
-                break;
+    SeatRow.split('').map(x => {
+        if (x == 'S') {
+            return makeSeat(seatRowNum, seatNameNum, colhead, 'Column').css('top', $(this).scrollTop() + "px");
+            seatNameNum++;
         }
-        seatNameNum++;
-    }
+        if (x == '_') {
+            return makeSeat(seatRowNum, seatNameNum, colhead, 'Aisle').css('top', $(this).scrollTop() + "px");
+        }
+    });
     seatNameNum = 1;
     //create the plane seats and aisles
     for (let i = 0; i < numRows; i++) {
-        for (let index = 0; index < SeatRow.length; index++) {
-            // console.log(SeatRow.charAt(index) + index);
-            switch (SeatRow.charAt(index)) {
-                case 'S':
-                    makeSeat(seatRowNum, seatNameNum, gridPanel, 'Seat');
-                    break;
-                case '_':
-                    makeSeat(seatRowNum, seatNameNum, gridPanel, 'Aisle');
-                    seatNameNum--;
-                    break;
+        ///
+        SeatRow.split('').map(x => {
+            if (x == 'S') {
+                makeSeat(seatRowNum, seatNameNum, colhead, 'Seat').css('top', $(this).scrollTop() + "px");
+                seatNameNum++;
             }
-            seatNameNum++;
-        }
+            if (x == '_') {
+                makeSeat(seatRowNum, seatNameNum, colhead, 'Aisle').css('top', $(this).scrollTop() + "px");
+            }
+        });
+        ///
         // added hr for visual seperation
         $('<hr>').css({
             "width": "100%",
@@ -180,7 +174,9 @@ $("form").submit(function(e) {
         id: 'PriceBtn',
         class: "price btn btn-default",
         text: "Price",
-        css: { marginRight: "1rem" },
+        css: {
+            marginRight: "1rem"
+        },
         click: function(e) {
 
             //remove previous calc
@@ -253,7 +249,9 @@ $("form").submit(function(e) {
     var resetBtn = $('<button>', {
         class: "reset btn btn-default",
         text: "Reset",
-        css: { marginLeft: "1rem" },
+        css: {
+            marginLeft: "1rem"
+        },
         click: function(e) {
             $('.red').removeClass('red');
             $('.alert').remove();
@@ -280,11 +278,11 @@ function makeSeat(rowDigit, colDigit, gridPanel, seatName) {
     return divMaker(gridPanel, seatName + ': ' + rowDigit + '-' + colDigit).attr('id', SeatId);
 }
 
-
+var widthPX;
 //graveyard chunk id 9 old divmaker()
 function divMaker(gridPanel, text) {
-    var widthPX = Math.ceil((container.width() * 0.985) / numColumns) - 2;
-    //console.log('widthPX: ' + widthPX);
+    widthPX = Math.ceil((container.width() * 0.985) / numColumns) - 2;
+    console.log('widthPX: ' + widthPX);
     var div = $('<div>', {
         text: text,
         class: "seat",
@@ -305,4 +303,19 @@ function divMaker(gridPanel, text) {
         return div.addClass('aisle').appendTo(gridPanel);
     }
     return div.appendTo(gridPanel);
+}
+
+function textfit() {
+    $('.seat').css('font-size', 'medium');
+    var w1 = $('#SeatChartContainer').width() - 10;
+    var w2 = $('.seat').width();
+    var wRatio = Math.round(w1 / w2 * 10) / 10;
+
+    var h1 = $('.container').height() - 10;
+    var h2 = $('.seat').height();
+    var hRatio = Math.round(h1 / h2 * 10) / 10;
+
+    var constraint = Math.min(wRatio, hRatio);
+
+    $('.seat').css('font-size', constraint + 'em');
 }

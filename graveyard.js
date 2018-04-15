@@ -1,3 +1,40 @@
+////CSS TEST
+$('<style>', {
+    text: '.seat{ width:' + (Math.ceil((container.width()) / numColumns) - 2) + ';}',
+}).appendTo($('head'));
+////CSS TEST END
+
+//chunk id 6
+//create the plane columns
+for (let index = 0; index < SeatRow.length; index++) {
+    // console.log(SeatRow.charAt(index) + index);
+    switch (SeatRow.charAt(index)) {
+        case 'S':
+            makeSeat(seatRowNum, seatNameNum, colhead, 'Column').css('top', $(this).scrollTop() + "px");
+            break;
+        case '_':
+            makeSeat(seatRowNum, seatNameNum, colhead, 'Aisle').css('top', $(this).scrollTop() + "px");
+            seatNameNum--;
+            break;
+    }
+    seatNameNum++;
+}
+
+//graveyard chunk 6B
+for (let index = 0; index < SeatRow.length; index++) {
+    // console.log(SeatRow.charAt(index) + index);
+    switch (SeatRow.charAt(index)) {
+        case 'S':
+            makeSeat(seatRowNum, seatNameNum, gridPanel, 'Seat');
+            break;
+        case '_':
+            makeSeat(seatRowNum, seatNameNum, gridPanel, 'Aisle');
+            seatNameNum--;
+            break;
+    }
+    seatNameNum++;
+}
+
 //chunk id 7
 console.log(idIndexString);
 console.log('seat: ' + seatsToBuy[index].name + 'and ' + seatsToBuy[index + 1].name + ' are next to each other');
